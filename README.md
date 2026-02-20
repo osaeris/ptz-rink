@@ -19,7 +19,7 @@ using a touch-friendly SVG hockey rink interface.
 ## Quick Start
 
 ```bash
-git clone https://github.com/yourname/ptz-rink
+git clone https://github.com/osaeris/ptz-rink
 cd ptz-rink
 cp config/camera.example.json config/camera.json
 docker build -t ptz-rink .
