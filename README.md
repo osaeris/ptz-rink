@@ -3,6 +3,7 @@
 A Raspberry Pi–hosted web application for controlling ONVIF PTZ camera presets
 using a touch-friendly SVG hockey rink interface.
 
+
 ## Features
 - SVG rink with faceoff-zone controls
 - ONVIF PTZ preset triggering
@@ -34,7 +35,7 @@ http://<pi-ip>:5001
 Notes
 
     The application will create `config/camera.json` automatically on first run.
-    You don't need to make any changes to the file, just go to the settings cog to set
+    You dont need to make any changes to the file, just go to the settings cog to set
     up your camera. http://<pi-ip>:5001/settings
     A sample structure is provided in `config/camera.example.json` for reference.
 
