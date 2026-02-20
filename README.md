@@ -34,6 +34,8 @@ http://<pi-ip>:5001
 Notes
 
     The application will create `config/camera.json` automatically on first run.
+    You don't need to make any changes to the file, just go to the settings cog to set
+    up your camera. http://<pi-ip>:5001/settings
     A sample structure is provided in `config/camera.example.json` for reference.
 
     Camera presets must already exist on the camera
