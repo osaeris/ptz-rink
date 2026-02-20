@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PTZ Hockey Control</title>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/rink.css') }}">
+</head>
+
+<body>
+
+  <h2>Camera 1</h2>
+<!-- Settings button -->
+<a href="/settings" class="settings-button" title="Settings">
+  ⚙️
+</a>
+
+<svg
+  viewBox="0 0 1000 500"
+  width="100%"
+  max-width="900px"
+  xmlns="http://www.w3.org/2000/svg"
+  class="rink"
+>
+
+  <!-- RINK BACKGROUND -->
+  <rect x="0" y="0" width="1000" height="500" rx="60" ry="60"
+        class="rink-bg"/>
+
+  <!-- LINES -->
+  <line x1="500" y1="0" x2="500" y2="500" class="center-line"/>
+  <line x1="250" y1="0" x2="250" y2="500" class="blue-line"/>
+  <line x1="750" y1="0" x2="750" y2="500" class="blue-line"/>
+
+  <!-- CENTER CIRCLE -->
+  <circle cx="500" cy="250" r="60" class="center-circle"/>
+
+  <!-- FACEOFF DOTS (visual reference only) -->
+  <!-- Left zone -->
+  <circle cx="250" cy="140" r="8" fill="red"/>
+  <circle cx="250" cy="360" r="8" fill="red"/>
+
+  <!-- Center -->
+  <circle cx="500" cy="250" r="8" fill="red"/>
+
+  <!-- Right zone -->
+  <circle cx="750" cy="140" r="8" fill="red"/>
+  <circle cx="750" cy="360" r="8" fill="red"/>
+
+  <!-- ===================== -->
+  <!-- CLICK / TOUCH ZONES -->
+  <!-- ===================== -->
+
+  <!-- LEFT DEFENSIVE - TOP -->
+  <rect
+    x="0" y="0"
+    width="400" height="250"
+    class="zone"
+    onclick="triggerPreset(1)"
+  />
+
+  <!-- LEFT DEFENSIVE - BOTTOM -->
+  <rect
+    x="0" y="250"
+    width="400" height="250"
+    class="zone"
+    onclick="triggerPreset(2)"
+  />
+
+  <!-- CENTER ICE -->
+  <rect
+    x="400" y="0"
+    width="200" height="500"
+    class="zone"
+    onclick="triggerPreset(3)"
+  />
+
+  <!-- RIGHT DEFENSIVE - TOP -->
+  <rect
+    x="600" y="0"
+    width="400" height="250"
+    class="zone"
+    onclick="triggerPreset(4)"
+  />
+
+  <!-- RIGHT DEFENSIVE - BOTTOM -->
+  <rect
+    x="600" y="250"
+    width="400" height="250"
+    class="zone"
+    onclick="triggerPreset(5)"
+  />
+
+</svg>
+
+
+
+  <script src="{{ url_for('static', filename='js/rink.js') }}"></script>
+
+</body>
+</html>

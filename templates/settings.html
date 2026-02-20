@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Camera Settings</title>
+</head>
+<body>
+  <h2>Camera Configuration</h2>
+
+{% if camera_status.ok %}
+  <p style="color: green;">✔ Camera connected</p>
+{% else %}
+  <p style="color: red;">
+    ⚠ Camera not connected<br>
+    <small>{{ camera_status.error }}</small>
+  </p>
+{% endif %}
+
+  <form method="POST">
+    <label>IP Address</label><br>
+    <input name="ip" value="{{ config.ip }}"><br><br>
+
+    <label>Port</label><br>
+    <input name="port" value="{{ config.port }}"><br><br>
+
+    <label>Username</label><br>
+    <input name="username" value="{{ config.username }}"><br><br>
+
+    <label>Password</label><br>
+    <input type="password" name="password" value="{{ config.password }}"><br><br>
+
+    <button type="submit">Save</button>
+  </form>
+
+  <br>
+  <a href="/">← Back to Rink</a>
+</body>
+</html>

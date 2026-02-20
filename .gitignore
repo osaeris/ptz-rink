@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+venv/
+venv311/
+
+# Docker
+*.log
+
+# Runtime config (DO NOT COMMIT)
+config/camera.json
+
+# OS junk
+.DS_Store
