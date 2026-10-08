@@ -6,7 +6,7 @@
       "username": "admin",
       "password": "admin",
       "presets": {
-        "startup": "0",
+       "startup": "0",
         "left_top": "1",
         "left_bottom": "2",
         "centre": "3",
@@ -14,8 +14,11 @@
         "right_bottom": "5",
         "dead_zone_left": "6",
         "dead_zone_right": "6",
-        "commentator": "7",
+        "sinbin": "7",
         "home_bench": "8",
-        "away_bench": "9"
+        "away_bench": "9",
+        "goal_left": "",
+        "goal_right": "",
+        "mom": ""
       }
     }
