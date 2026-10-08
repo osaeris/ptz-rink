@@ -4,8 +4,10 @@ import logging
 
 logging.basicConfig(level=logging.INFO)
 
+
 class PTZController:
-    def __init__(self, ip, port, username, password, preset_map):
+    def __init__(self, name, ip, port, username, password, preset_map):
+        self.name = name
         self.ip = ip
         self.port = port
         self.username = username
@@ -17,14 +19,23 @@ class PTZController:
         self.ptz = self.camera.create_ptz_service()
         self.profile = self.media.GetProfiles()[0]
 
-    def goto_preset(self, preset_id):
-        if preset_id not in self.preset_map:
-            raise ValueError(f"Preset {preset_id} not defined")
+    def goto_preset(self, preset_name):
 
-        preset_token = self.preset_map[preset_id]
+        if preset_name not in self.preset_map:
+            raise ValueError(
+                f"Preset '{preset_name}' not defined for camera '{self.name}'"
+            )
+
+        preset_token = self.preset_map[preset_name]
+
+        if not preset_token:
+            raise ValueError(
+                f"No preset token configured for '{preset_name}' on '{self.name}'"
+            )
 
         logging.info(
-            f"Camera {self.ip}: GotoPreset {preset_id} (token {preset_token})"
+            f"{self.name} ({self.ip}) -> "
+            f"{preset_name} (token {preset_token})"
         )
 
         self.ptz.GotoPreset({
@@ -33,20 +44,24 @@ class PTZController:
         })
 
 
-def goto_preset_async(controller, preset_id):
-    """Run PTZ move in a background thread so Flask never blocks"""
+def goto_preset_async(controller, preset_name):
+    """Run PTZ move in a background thread so Flask never blocks."""
+
     thread = threading.Thread(
         target=controller.goto_preset,
-        args=(preset_id,),
+        args=(preset_name,),
         daemon=True
     )
+
     thread.start()
+
 
 def create_controller_from_config(config):
     return PTZController(
+        name=config["name"],
         ip=config["ip"],
         port=config.get("port", 80),
         username=config["username"],
         password=config["password"],
-        preset_map={int(k): v for k, v in config["presets"].items()}
+        preset_map=config["presets"]
     )

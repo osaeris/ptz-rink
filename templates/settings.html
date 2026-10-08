@@ -1,37 +1,203 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Camera Settings</title>
+    <meta charset="UTF-8">
+    <title>PTZ Settings</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/rink.css') }}">
+
+    <style>
+
+        body{
+            font-family:Arial,sans-serif;
+            margin:40px;
+            max-width:900px;
+        }
+
+        .camera{
+            border:1px solid #ccc;
+            border-radius:10px;
+            padding:20px;
+            margin-bottom:30px;
+        }
+
+        h2{
+            margin-top:0;
+        }
+
+        label{
+            display:block;
+            margin-top:10px;
+            font-weight:bold;
+        }
+
+        input[type=text],
+        input[type=password],
+        input[type=number]{
+
+            width:100%;
+            padding:8px;
+            box-sizing:border-box;
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+            margin-top:15px;
+        }
+
+        td{
+            padding:6px;
+        }
+
+        button{
+            margin-top:25px;
+            padding:10px 20px;
+            font-size:16px;
+        }
+
+    </style>
+
 </head>
+
 <body>
-  <h2>Camera Configuration</h2>
 
-{% if camera_status.ok %}
-  <p style="color: green;">✔ Camera connected</p>
-{% else %}
-  <p style="color: red;">
-    ⚠ Camera not connected<br>
-    <small>{{ camera_status.error }}</small>
-  </p>
-{% endif %}
+<h1>PTZ Hockey Settings</h1>
 
-  <form method="POST">
-    <label>IP Address</label><br>
-    <input name="ip" value="{{ config.ip }}"><br><br>
+<form method="POST">
 
-    <label>Port</label><br>
-    <input name="port" value="{{ config.port }}"><br><br>
+<label>
+Trigger Delay (ms)
+</label>
 
-    <label>Username</label><br>
-    <input name="username" value="{{ config.username }}"><br><br>
+<input
+    type="number"
+    name="trigger_delay_ms"
+    value="{{ config.trigger_delay_ms }}">
 
-    <label>Password</label><br>
-    <input type="password" name="password" value="{{ config.password }}"><br><br>
+<hr>
 
-    <button type="submit">Save</button>
-  </form>
+{% for camera in config.cameras %}
 
-  <br>
-  <a href="/">← Back to Rink</a>
+<div class="camera">
+
+<h2>Camera {{ loop.index }}</h2>
+
+<label>
+
+<input
+    type="checkbox"
+    name="camera_{{ loop.index0 }}_enabled"
+
+    {% if camera.enabled %}
+        checked
+    {% endif %}
+>
+
+Enabled
+
+</label>
+
+<label>Name</label>
+
+<input
+    type="text"
+    name="camera_{{ loop.index0 }}_name"
+    value="{{ camera.name }}">
+
+<label>IP Address</label>
+
+<input
+    type="text"
+    name="camera_{{ loop.index0 }}_ip"
+    value="{{ camera.ip }}">
+
+<label>Port</label>
+
+<input
+    type="number"
+    name="camera_{{ loop.index0 }}_port"
+    value="{{ camera.port }}">
+
+<label>Username</label>
+
+<input
+    type="text"
+    name="camera_{{ loop.index0 }}_username"
+    value="{{ camera.username }}">
+
+<label>Password</label>
+
+<input
+    type="password"
+    name="camera_{{ loop.index0 }}_password"
+    value="{{ camera.password }}">
+
+<h3>Preset Mapping</h3>
+
+<table>
+{% set camera_index = loop.index0 %}
+{% for preset in config.preset_order %}
+
+<tr>
+
+<td>{{ preset.replace("_"," ").title() }}</td>
+
+<td>
+
+<input
+    type="text"
+    name="camera_{{ camera_index }}_{{ preset }}"
+    value="{{ camera.presets[preset] }}">
+
+</td>
+
+</tr>
+
+
+
+
+
+
+{% endfor %}
+
+</table>
+
+
+<p>
+    <strong>Status:</strong>
+    <span id="status-{{ camera_index }}">
+        Unknown
+    </span>
+</p>
+
+<button
+    type="button"
+    onclick="testCamera({{ camera_index }})">
+    Test Camera
+</button>
+
+</div>
+
+
+
+   
+
+{% endfor %}
+
+<button type="submit">
+
+Save Settings
+
+</button>
+
+</form>
+
+<p><a href='/'>Back to Rink</a></p>
+
+<script src="{{ url_for('static', filename='js/settings.js') }}"></script>
+
 </body>
+
 </html>

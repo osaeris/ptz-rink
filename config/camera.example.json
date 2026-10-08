@@ -1,13 +1,21 @@
-{
-  "ip": "192.168.1.100",
-  "port": 80,
-  "username": "admin",
-  "password": "password",
-  "presets": {
-    "1": "1",
-    "2": "2",
-    "3": "3",
-    "4": "4",
-    "5": "5"
-  }
-}
+    {
+      "enabled": false,
+      "name": "cam1",
+      "ip": "192.168.0.100",
+      "port": 80,
+      "username": "admin",
+      "password": "admin",
+      "presets": {
+        "startup": "0",
+        "left_top": "1",
+        "left_bottom": "2",
+        "centre": "3",
+        "right_top": "4",
+        "right_bottom": "5",
+        "dead_zone_left": "6",
+        "dead_zone_right": "6",
+        "commentator": "7",
+        "home_bench": "8",
+        "away_bench": "9"
+      }
+    }
